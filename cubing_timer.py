@@ -22,6 +22,7 @@ def timer():
         result = ""
         if size == 3:
             scramble_list = [[" R ", " R2 ", " R' "], [" L ", " L2 ", " L' "], [" B ", " B2 ", " B' "], [" D ", " D2 ", " D' "], [" F ", " F2 ", " F' "], [" U ", " U2 ", " U' "]]
+            scramble_list = random.sample(scramble_list, len(scramble_list))
             sub = ''
             for _ in range(3):
                 for i in range(len(scramble_list)):
@@ -29,27 +30,26 @@ def timer():
                     sub = random.sample(j, len(j))[random.randint(0,2)]
                     result += sub
                 scramble_list.remove(j)
-            return result[:-2]
+            return result[:-3]
 
         elif size == 2:
-            scramble_list_1 = [[" R ", " R2 ", " R' "], [" L ", " L2 ", " L' "]]
-            scramble_list_2 = [[" B ", " B2 ", " B' "], [" F ", " F2 ", " F' "]]
-            scramble_list_3 = [[" D ", " D2 ", " D' "], [" U ", " U2 ", " U' "]]
+            scramble_list = [[" R ", " R2 ", " R' "], [" L ", " L2 ", " L' "], [" B ", " B2 ", " B' "], [" F ", " F2 ", " F' "],[" D ", " D2 ", " D' "], [" U ", " U2 ", " U' "]]
+            indexs = [[0,1],[2,3],[4,5]]
             result = ""
-            for _ in range(5):
-                for i in range(3):
-                    if i == 0:
-                        sub = ''
-                        sub = scramble_list_1[random.randint(0,1)][random.randint(0,2)]
-                        result += sub
-                    elif i == 2:
-                        sub = ''
-                        sub = scramble_list_2[random.randint(0,1)][random.randint(0,2)]
-                        result += sub
-                    elif i == 3:
-                        sub = ''
-                        sub = scramble_list_3[random.randint(0,1)][random.randint(0,2)]
-                        result += sub
+            j = []
+
+            num = random.randint(0,2)
+            if num == 0:
+                j = [0,1,2]*3
+            elif num == 1:
+                j = [1,2,0]*3
+            else:
+                j = [2,0,1]*3
+
+            for i in range(9):
+                index = indexs[j[i]][random.randint(0,1)]
+                result += scramble_list[index][random.randint(0,2)]
+                
             return result
                 
 
