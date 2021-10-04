@@ -16,11 +16,16 @@ python3:
 
 Run cubing_timer.py to start the timer
 
+# Current version only support 2 by 2 and 3 by 3 #
 
 It will ask you "Which cube?(ex: 3 => 3x3):"
 
-#Current version only support 2 by 2 and 3 by 3#
 
 have fun cubing!
 
-author:John
+![View](./example_images/general_view.png)
+![Timing](./example_images/timer_example.png)
+![Press space](./example_images/when_pressing_space.png)
+
+
+Author: John
