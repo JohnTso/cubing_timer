@@ -4,6 +4,7 @@ import sys
 import random
 
 
+print("initializing...")
 
 WIDTH = 500
 HEIGHT = 600
@@ -17,6 +18,7 @@ pygame.display.set_caption('professional cubing timer')
 
 def timer():
 
+    print("loading...")
     
     def scramble(size):
         result = ""
@@ -121,7 +123,7 @@ def timer():
         draw_text(screen, "ao5: "+ ao5, 30, 250, 480, BLACK)
         draw_text(screen, "ao12: "+ ao12, 30, 250, 520, BLACK)
 
-
+    print("finished!")
     cube_size = int(input("Which cube?(ex: 3 => 3x3): "))
 
     screen.fill(WHITE)
