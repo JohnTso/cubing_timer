@@ -131,11 +131,12 @@ def timer():
         try:
             cube_size = int(input("Which cube?(ex: 3 => 3x3): "))
             if cube_size not in supported_cube:
-                print(f"Cube is {cube_size} by {cube_size}")
-                print("this version only support 2 by 2 and 3 by 3 now")
-            elif not cube_size:
-                print("exiting...")
-                correct = True
+                if not cube_size:
+                    print("exiting...")
+                    correct = True
+                else:
+                    print(f"Cube is {cube_size} by {cube_size}")
+                    print("this version only support 2 by 2 and 3 by 3 now")
 
             else:
                 print("pygame opening...")

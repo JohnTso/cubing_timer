@@ -10,7 +10,7 @@ python2:
 
 python3:
 
-    pip install pygame
+    pip3 install pygame
 
 --------------------------------------------------------------------------------
 
