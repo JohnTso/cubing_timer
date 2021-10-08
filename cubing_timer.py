@@ -123,9 +123,31 @@ def timer():
         draw_text(screen, "ao5: "+ ao5, 30, 250, 480, BLACK)
         draw_text(screen, "ao12: "+ ao12, 30, 250, 520, BLACK)
 
-    print("finished!")
-    cube_size = int(input("Which cube?(ex: 3 => 3x3): "))
+    print("finished!\nenter 0 to exit")
 
+    correct = False
+    supported_cube = [2,3]
+    while not correct:
+        try:
+            cube_size = int(input("Which cube?(ex: 3 => 3x3): "))
+            if cube_size not in supported_cube:
+                print(f"Cube is {cube_size} by {cube_size}")
+                print("this version only support 2 by 2 and 3 by 3 now")
+            elif not cube_size:
+                print("exiting...")
+                correct = True
+
+            else:
+                print("pygame opening...")
+                correct = True
+        except:
+            print("answer invaild! try again!")
+
+    if not cube_size:
+        pygame.quit()
+        sys.exit()
+
+    print("pygame opened!")
     screen.fill(WHITE)
     draw_text(screen, 'Press space to start timing', 25, 250, 100, RED)
     scramble_info = scramble(cube_size)
