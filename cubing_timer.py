@@ -1,7 +1,4 @@
-import pygame
-import time
-import sys
-import random
+import pygame, time, sys, random
 
 
 print("initializing...")
@@ -27,6 +24,7 @@ def timer():
             scramble_list = random.sample(scramble_list, len(scramble_list))
             sub = ''
             for _ in range(3):
+                scramble_list = random.sample(scramble_list, len(scramble_list))
                 for i in range(len(scramble_list)):
                     j = scramble_list[i]
                     sub = random.sample(j, len(j))[random.randint(0,2)]
@@ -60,7 +58,7 @@ def timer():
     def draw_text(surf, text, size, x, y, color, digit=False):
         font = pygame.font.Font(font_name, size)
         if digit:
-            font = pygame.font.Font("digital-7.ttf", 75)
+            font = pygame.font.Font("digital-7.ttf", 80)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.centerx = x
@@ -69,11 +67,10 @@ def timer():
 
     def draw_time(input, min, hr):
         if hr > 0:
-            return f'{hr}:{min}:{input}'  
+            return f'{hr} : {min} : {input}'  
         elif min > 0:
-            return f'{min}:{input}'   
-        else:
-            return input
+            return f'{min} : {input}' 
+        return input
 
     def sec_to_time(sec):
         s, hr, m = float(sec), 0, 0
@@ -198,14 +195,14 @@ def timer():
                                 pygame.quit()
                                 sys.exit()
 
-                            elif event.type == pygame.KEYUP:
+                            elif event.type == pygame.KEYDOWN:
 
                                 if event.key == pygame.K_SPACE:
                                     timing = False
                                     
-
+                        seconds_to_2 = str(round(time.time() - before, 2))
                         seconds = str(round(time.time() - before, 1))
-                        
+
                         if seconds == '60.0':
                             minutes += 1
                             before = time.time()
@@ -221,12 +218,13 @@ def timer():
                     
                     if not timing:
                         solves += 1
-                        times.append([int(hours),int(minutes),float(seconds)])
+                        screen.fill(WHITE)
+                        times.append([int(hours),int(minutes),float(seconds_to_2)])
                         draw_text(screen, 'Press space again to start', 25, 250, 100, RED)
                         scramble_info = scramble(cube_size)
                         draw_text(screen, f"{cube_size}x{cube_size}", 20, 250, 10, BLACK)
                         draw_text(screen, "scramble:" + scramble_info, 20, 250, 40, BLACK)
-                        draw_text(screen, draw_time(seconds, minutes, hours), 50, 250, 200, GREEN, True)
+                        draw_text(screen, draw_time(seconds_to_2, minutes, hours), 50, 250, 200, GREEN, True)
                         draw_info(times)
                         draw_text(screen, f"solve #{solves}", 25, 250, 570, BLACK)
                         pygame.display.update()
@@ -242,7 +240,7 @@ def timer():
                                     screen.fill(WHITE)
                                     draw_text(screen, 'Ready...', 40, 250, 100, RED)
                                     draw_text(screen, '0.0', 70, 250, 200, RED, True)
-                                    draw_text(screen, "Previous time: "+draw_time(seconds, minutes, hours), 35, 250, 300, BLACK)
+                                    draw_text(screen, "Previous time: "+draw_time(seconds_to_2, minutes, hours), 35, 250, 300, BLACK)
                                     pygame.display.update()
                                     timing = True
                             
