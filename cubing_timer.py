@@ -3,7 +3,7 @@ import pygame, time, sys, random
 
 print("initializing...")
 
-WIDTH = 500
+WIDTH = 675
 HEIGHT = 600
 WHITE = (255, 255, 255)
 BLACK = (0 ,0, 0)
@@ -67,9 +67,9 @@ def timer():
 
     def draw_time(input, min, hr):
         if hr > 0:
-            return f'{hr} : {min} : {input}'  
+            return f'{hr}:{min}:{input}'  
         elif min > 0:
-            return f'{min} : {input}' 
+            return f'{min}:{input}' 
         return input
 
     def sec_to_time(sec):
@@ -171,6 +171,8 @@ def timer():
     
     times = []
     solves = 0
+    y = 0
+    info = {}
     running = True
     while running:
 
@@ -184,9 +186,9 @@ def timer():
                 
                 if event.key == pygame.K_SPACE:
                     timing = True 
-                    before = time.time()
                     minutes = 0
                     hours = 0
+                    before = time.time()
                     while timing:
 
                         for event in pygame.event.get():
@@ -213,13 +215,30 @@ def timer():
                         
 
                         screen.fill(WHITE)
-                        draw_text(screen, draw_time(seconds, minutes, hours), 50, 250, 200, BLACK, True)
+                        draw_text(screen, draw_time(seconds, minutes, hours), 80, 325, 200, BLACK, True)
                         pygame.display.update()
-                    
+
+                    def draw_solves(solves, info):
+                        y = 15
+                        x = 530
+                        i = info
+                        pygame.draw.rect(screen, BLACK, pygame.Rect(x,y,30,30), 2)
+                        draw_text(screen, '#', 25, x+15, y+5, BLACK)
+                        draw_text(screen, 'times', 25, x+70, y+5, BLACK)
+                        pygame.draw.rect(screen, BLACK, pygame.Rect(x+30,y,110,30), 2)
+                        for i in range(solves):
+                            y += 30
+                            draw_text(screen, str(i+1), 25, x+15, y+5, BLACK)
+                            draw_text(screen, str(info[i+1]), 25, x+70, y+5, BLACK)
+                            pygame.draw.rect(screen, BLACK, pygame.Rect(530,y,30,30), 2)
+                            pygame.draw.rect(screen, BLACK, pygame.Rect(560,y,110,30), 2)
+
                     if not timing:
                         solves += 1
                         screen.fill(WHITE)
                         times.append([int(hours),int(minutes),float(seconds_to_2)])
+                        info[solves] = draw_time(float(seconds_to_2), int(minutes), int(hours))
+                        draw_solves(solves, info)
                         draw_text(screen, 'Press space again to start', 25, 250, 100, RED)
                         scramble_info = scramble(cube_size)
                         draw_text(screen, f"{cube_size}x{cube_size}", 20, 250, 10, BLACK)
