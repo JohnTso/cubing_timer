@@ -154,7 +154,7 @@ def timer():
     draw_text(screen, f"{cube_size}x{cube_size}", 20, 250, 10, BLACK)
     draw_text(screen, "scramble:" + scramble_info, 20, 250, 40, BLACK)
     draw_text(screen, '#', 25, x+15, y+5, BLACK)
-    draw_text(screen, 'times', 25, x+80, y+5, BLACK)
+    draw_text(screen, 'times', 25, x+90, y+5, BLACK)
     pygame.draw.rect(screen, BLACK, pygame.Rect(x,y,30,30), 2)
     pygame.draw.rect(screen, BLACK, pygame.Rect(x+30,y,125,30), 2)
     pygame.display.update()
@@ -230,7 +230,7 @@ def timer():
                         x = 530
                         pygame.draw.rect(screen, BLACK, pygame.Rect(x,y,30,30), 2)
                         draw_text(screen, '#', 25, x+15, y+5, BLACK)
-                        draw_text(screen, 'times', 25, x+80, y+5, BLACK)
+                        draw_text(screen, 'times', 25, x+90, y+5, BLACK)
                         pygame.draw.rect(screen, BLACK, pygame.Rect(x+30,y,125,30), 2)
                         for i in range(solves):
                             y += 30
