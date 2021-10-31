@@ -148,7 +148,7 @@ def timer():
         except:
             print("answer invaild! try again!")
             pygame.quit()
-            sys.exit
+            sys.exit()
 
     if not cube_size:
         pygame.quit()
