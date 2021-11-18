@@ -260,8 +260,6 @@ def timer():
                         t = font.render("times", True, BLACK)
                         screen.blit(n, (540,y+5))
                         screen.blit(t, (600,y+5))
-                        #draw_text(screen, "#", 25, 540, 20, BLACK)
-                        #draw_text(screen, "times", 25, 600, 20, BLACK)
                         global rect_pos_p2
                         global rect_pos_dnf
                         rect_pos_p2 = {}
@@ -286,7 +284,7 @@ def timer():
                             rect_pos_dnf[i-1] = [x1+30,y,i]
 
                             if not info[i][1] % 2:
-                                n = font.render(str(i), True, BLACK)
+                                t = font.render(str(info[i][0]), True, BLACK)
                                 pygame.draw.rect(screen, GREEN, pygame.Rect(x1,y,30,30), 2)
 
                             elif not info[i][2] % 2:
