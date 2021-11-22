@@ -67,9 +67,9 @@ def timer():
 
     def draw_time(input, min, hr):
         if hr > 0:
-            return f'{hr}:{min}:{input}'  
+            return f'{hr}:{min}:{s}'  
         elif min > 0:
-            return f'{min}:{input}' 
+            return f'{min}:{s}' 
         return input
 
     def sec_to_time(sec):
@@ -83,8 +83,6 @@ def timer():
         elif s < 60:
             return str(s)
 
-        s, m, hr = int(s),int(m), int(hr)   
-
         if hr:
             return f'{hr}:{m}:{s}'
         elif m:
@@ -97,10 +95,11 @@ def timer():
         for i in range(len(input)):
             if not info[i+1][2] % 2:
                 dnf_list.append(i)
+
         sec_list = []
         for i in input:
             if input.index(i) in dnf_list:
-                l-= 1
+                l -= 1
                 continue
             sec = 0
             for j in range(len(i)):
@@ -134,19 +133,18 @@ def timer():
         ao12 = '-'
         if l > 4:
             ao5 = sec_to_time(round(sum(sec_list[-5:])/5, 2))
+            draw_text(screen, "ao5: "+ ao5, 30, 250, 480, BLUE)
+        else:
+            draw_text(screen, "ao5: -", 30, 250, 480, BLACK)
+
         if l > 11:
             ao12 = sec_to_time(round(sum(sec_list[-12:])/12, 2))
+            draw_text(screen, "ao12: -"+ ao12, 30, 250, 520, BLUE)
+        else:
+            draw_text(screen, "ao12: "+ ao12, 30, 250, 520, BLACK)
 
         draw_text(screen, "Mean: " + mean_time, 25, 155, 400, BLACK)
         draw_text(screen, "Best: " + best_time, 25, 350, 400, GREEN)
-        if ao5 != '-':
-            draw_text(screen, "ao5: "+ ao5, 30, 250, 480, BLUE)
-        else:
-            draw_text(screen, "ao5: "+ ao5, 30, 250, 480, BLACK)
-        if ao12 != '-':
-            draw_text(screen, "ao12: "+ ao12, 30, 250, 520, BLUE)
-        else:
-            draw_text(screen, "ao12: "+ ao12, 30, 250, 520, BLACK)
 
     print("finished!\nenter 0 to exit")
 
@@ -194,6 +192,7 @@ def timer():
 
     screen.fill(WHITE)
     init = True
+    count = 0
     while init:
                         
         for event in pygame.event.get():
@@ -203,15 +202,41 @@ def timer():
                 pygame.quit()
                 sys.exit()
 
+            pygame.key.set_repeat(10,10)
             if event.type == pygame.KEYDOWN:
 
                 if event.key == pygame.K_SPACE:
 
+                    count += 1
                     pygame.display.update()
+                    screen.fill(WHITE)
                     draw_text(screen, 'Ready...', 40, 325, 100, RED)
                     draw_text(screen, '0.0', 70, 325, 200, RED, True)
-                    pygame.display.update()
-                    init = False
+                    pygame.display.flip()
+                    
+                    if count > 50:
+                        screen.fill(WHITE)
+                        draw_text(screen, 'Set...', 40, 325, 100, GREEN)
+                        draw_text(screen, '0.0', 70, 325, 200, GREEN, True)
+                        pygame.display.flip()
+                        pygame.key.set_repeat()
+                        init = False
+                        continue
+
+            elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE and count:
+                pygame.draw.rect(screen, WHITE, pygame.Rect(225,100,300,250))
+                count = 0
+                draw_text(screen, 'Press space to start timing', 25, 250, 100, RED)
+                draw_text(screen, f"{cube_size}x{cube_size}", 20, 250, 10, BLACK)
+                draw_text(screen, "scramble:" + scramble_info, 21, 255, 40, BLACK)
+                pygame.draw.rect(screen, BLACK, pygame.Rect(x-25,y,55,30), 2)
+                pygame.draw.rect(screen, BLACK, pygame.Rect(x+30,y,125,30), 2)
+                font = pygame.font.SysFont("roman", 25)
+                n = font.render("#", True, BLACK)
+                t = font.render("times", True, BLACK)
+                screen.blit(n, (x-5,y+5))
+                screen.blit(t, (x+70,y+5))
+                pygame.display.flip()
     
     times = []  
     solves = 0
@@ -328,7 +353,7 @@ def timer():
                         draw_text(screen, f"solve #{solves}", 25, 250, 570, BLACK)
                         pygame.display.flip()
 
-                    
+                    count = 0
                     while not timing:
 
                         for event in pygame.event.get():
@@ -337,16 +362,38 @@ def timer():
                                 pygame.quit()
                                 sys.exit()
 
+                            pygame.key.set_repeat(10,10)
                             if event.type == pygame.KEYDOWN:
 
                                 if event.key == pygame.K_SPACE:
 
                                     screen.fill(WHITE)
+                                    count += 1
                                     draw_text(screen, 'Ready...', 40, 325, 100, RED)
                                     draw_text(screen, '0.0', 70, 325, 200, RED, True)
-                                    draw_text(screen, "Previous time: "+draw_time(seconds_to_2, minutes, hours), 35, 325, 300, BLACK)
-                                    pygame.display.update()
-                                    timing = True
+                                    draw_text(screen, "Previous time: "+draw_time(str(times[solves-1][2]), times[solves-1][1], times[solves-1][0]), 35, 325, 300, BLACK)
+                                    pygame.display.flip()
+                                    if count > 50:
+                                        screen.fill(WHITE)
+                                        draw_text(screen, 'Set...', 40, 325, 100, GREEN)
+                                        draw_text(screen, '0.0', 70, 325, 200, GREEN, True)
+                                        draw_text(screen, "Previous time: "+draw_time(str(times[solves-1][2]), times[solves-1][1], times[solves-1][0]), 35, 325, 300, BLACK)
+                                        pygame.display.flip()
+                                        pygame.key.set_repeat()
+                                        timing = True
+                                        continue
+
+                            elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE and count:
+                                screen.fill(WHITE)
+                                count = 0
+                                draw_solves(solves, info, mover+15)
+                                draw_text(screen, 'Press space again to start', 25, 250, 100, RED)
+                                draw_text(screen, f"{cube_size}x{cube_size}", 20, 250, 10, BLACK)
+                                draw_text(screen, "scramble:" + scramble_info, 21, 255, 40, BLACK)
+                                draw_text(screen, draw_time(seconds_to_2, minutes, hours), 50, 250, 200, GREEN, True)
+                                draw_info(times)
+                                draw_text(screen, f"solve #{solves}", 25, 250, 570, BLACK)
+                                pygame.display.flip()
 
                             mouse = pygame.mouse.get_pos()
                             for i in range(solves):
@@ -368,7 +415,7 @@ def timer():
                                                 pygame.draw.rect(screen, WHITE, pygame.Rect(520,15,250,HEIGHT))
                                                 draw_solves(solves, info, 15+mover)
                                                 pygame.draw.rect(screen, RED, pygame.Rect(x_dnf,y_dnf,55,30), 2)
-                                                pygame.draw.rect(screen, WHITE, pygame.Rect(95,400,305,150))
+                                                pygame.draw.rect(screen, WHITE, pygame.Rect(95,400,310,150))
                                                 draw_info(times)
                                                 pygame.display.flip()
                                                 continue
@@ -379,7 +426,7 @@ def timer():
                                                 pygame.draw.rect(screen, WHITE, pygame.Rect(520,15,250,HEIGHT))
                                                 draw_solves(solves, info, 15+mover)
                                                 pygame.draw.rect(screen, GREEN, pygame.Rect(x_dnf,y_dnf,55,30), 2)
-                                                pygame.draw.rect(screen, WHITE, pygame.Rect(95,400,305,150))
+                                                pygame.draw.rect(screen, WHITE, pygame.Rect(95,400,310,150))
                                                 draw_info(times)
                                                 pygame.display.flip()
 
@@ -396,7 +443,7 @@ def timer():
                                                 pygame.draw.rect(screen, WHITE, pygame.Rect(520,15,250,HEIGHT))
                                                 draw_solves(solves, info, 15+mover)
                                                 pygame.draw.rect(screen, RED, pygame.Rect(x_p2,y_p2,30,30), 2)
-                                                pygame.draw.rect(screen, WHITE, pygame.Rect(95,400,305,150))
+                                                pygame.draw.rect(screen, WHITE, pygame.Rect(95,400,310,150))
                                                 draw_info(times)
                                                 pygame.display.flip()
                                                 continue
@@ -410,7 +457,7 @@ def timer():
                                                 pygame.draw.rect(screen, WHITE, pygame.Rect(520,15,250,HEIGHT))
                                                 draw_solves(solves, info, 15+mover)
                                                 pygame.draw.rect(screen, GREEN, pygame.Rect(x_p2,y_p2,30,30), 2)
-                                                pygame.draw.rect(screen, WHITE, pygame.Rect(95,400,305,150))
+                                                pygame.draw.rect(screen, WHITE, pygame.Rect(95,400,310,150))
                                                 draw_info(times)
                                                 pygame.display.flip()
 
