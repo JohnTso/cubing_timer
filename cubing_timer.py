@@ -112,9 +112,7 @@ def timer():
             sec_list.append(sec)
 
         if sec_list == []:
-            mean = '-'
             mean_time = '-'
-            best = '-'
             best_time = '-'
             ao5 = '-'
             ao12 = '-'
@@ -139,9 +137,9 @@ def timer():
 
         if l > 11:
             ao12 = sec_to_time(round(sum(sec_list[-12:])/12, 2))
-            draw_text(screen, "ao12: -"+ ao12, 30, 250, 520, BLUE)
+            draw_text(screen, "ao12: "+ ao12, 30, 250, 520, BLUE)
         else:
-            draw_text(screen, "ao12: "+ ao12, 30, 250, 520, BLACK)
+            draw_text(screen, "ao12: -", 30, 250, 520, BLACK)
 
         draw_text(screen, "Mean: " + mean_time, 25, 155, 400, BLACK)
         draw_text(screen, "Best: " + best_time, 25, 350, 400, GREEN)
