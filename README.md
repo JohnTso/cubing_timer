@@ -39,5 +39,5 @@ When pressing space to start:
 
 Have fun!
 
-![Cubing timer](./example_images/have_fun.png)
+![Have Fun](./example_images/have_fun.png)
 
