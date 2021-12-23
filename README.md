@@ -37,5 +37,7 @@ When pressing space to start:
 
 ![Press space](./example_images/when_pressing_space.png)
 
+Have fun!
 
-Author: John
+![Cubing timer](./example_images/have_fun.png)
+
