@@ -535,10 +535,10 @@ def timer():
                                             pygame.draw.rect(screen, BLACK, pygame.Rect(x-50,y-10,15,17), 2)
                                             pygame.display.flip()
 
-                                        elif event.button == 4 and mover < HEIGHT-70 and event.type == pygame.MOUSEBUTTONDOWN:
+                                        elif event.button == 4 and mover < HEIGHT-70 and mouse[0] >= 515 and event.type == pygame.MOUSEBUTTONDOWN:
                                             mover += 3
 
-                                        elif event.button == 5 and mover >= (-30*solves) and event.type == pygame.MOUSEBUTTONDOWN:
+                                        elif event.button == 5 and mover >= (-30*solves) and mouse[0] >= 515 and event.type == pygame.MOUSEBUTTONDOWN:
                                             mover -= 3
 
                                         if 530 < mouse[0] < WIDTH and 15 < mouse[1] < HEIGHT and event.button == 4 or event.button == 5:
