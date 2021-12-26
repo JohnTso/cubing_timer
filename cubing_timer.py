@@ -283,8 +283,8 @@ def timer():
                 pygame.draw.rect(screen, WHITE, pygame.Rect(225,100,300,250))
                 count = 0
                 draw_text(screen, 'Press space to start timing', 25, 250, 100, RED)
-                draw_text(screen, f"{cube_size}x{cube_size}", 20, 250, 10, BLACK)
-                draw_text(screen, "scramble:" + scramble_info, 21, 255, 40, BLACK)
+                draw_text(screen, f"Scrable({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
+                draw_text(screen, scramble_info, 23, 255, 45, BLACK)
                 pygame.draw.rect(screen, BLACK, pygame.Rect(x-25,y,55,30), 2)
                 pygame.draw.rect(screen, BLACK, pygame.Rect(x+30,y,125,30), 2)
                 font = pygame.font.SysFont("roman", 25)
@@ -449,8 +449,8 @@ def timer():
                                 count = 0
                                 draw_solves(solves, info, mover+15)
                                 draw_text(screen, 'Press space again to start', 25, 250, 100, RED)
-                                draw_text(screen, f"{cube_size}x{cube_size}", 20, 250, 10, BLACK)
-                                draw_text(screen, "scramble:" + scramble_info, 21, 255, 40, BLACK)
+                                draw_text(screen, f"Scrable({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
+                                draw_text(screen, scramble_info, 23, 255, 45, BLACK)
                                 draw_text(screen, draw_time(seconds_to_2, minutes, hours), 50, 250, 200, GREEN, True)
                                 draw_info(times)
                                 draw_text(screen, f"solve #{solves}", 25, 250, 570, BLACK)
