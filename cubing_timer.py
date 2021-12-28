@@ -259,7 +259,7 @@ def timer():
     print("pygame opened!")
     screen.fill(WHITE)
     draw_text(screen, 'Press space to start timing', 25, 250, 150, RED)
-    scramble_info = scramble(cube_size)
+    scramble(cube_size)
     draw_text(screen, f"Scramble({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
     pygame.draw.rect(screen, BLACK, pygame.Rect(x-25,y,55,30), 2)
     pygame.draw.rect(screen, BLACK, pygame.Rect(x+30,y,125,30), 2)
@@ -308,7 +308,7 @@ def timer():
                 count = 0
                 draw_text(screen, 'Press space to start timing', 25, 250, 100, RED)
                 draw_text(screen, f"Scrable({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
-                draw_text(screen, scramble_info, 23, 255, 45, BLACK)
+                scramble(cube_size)
                 pygame.draw.rect(screen, BLACK, pygame.Rect(x-25,y,55,30), 2)
                 pygame.draw.rect(screen, BLACK, pygame.Rect(x+30,y,125,30), 2)
                 font = pygame.font.SysFont("roman", 25)
@@ -430,7 +430,7 @@ def timer():
                         info[solves] = [draw_time(float(seconds_to_2), int(minutes), int(hours)), 1, 1]
                         draw_solves(solves, info, mover+15)
                         draw_text(screen, 'Press space again to start', 25, 250, 150, RED)
-                        scramble_info = scramble(cube_size)
+                        scramble(cube_size)
                         draw_text(screen, f"Scramble({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
                         draw_text(screen, draw_time(seconds_to_2, minutes, hours), 50, 250, 200, GREEN, True)
                         draw_info(times)
@@ -472,8 +472,8 @@ def timer():
                                 count = 0
                                 draw_solves(solves, info, mover+15)
                                 draw_text(screen, 'Press space again to start', 25, 250, 100, RED)
-                                draw_text(screen, f"Scrable({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
-                                draw_text(screen, scramble_info, 23, 255, 45, BLACK)
+                                draw_text(screen, f"Scramble({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
+                                scramble(cube_size)
                                 draw_text(screen, draw_time(seconds_to_2, minutes, hours), 50, 250, 200, GREEN, True)
                                 draw_info(times)
                                 draw_text(screen, f"solve #{solves}", 25, 250, 570, BLACK)
