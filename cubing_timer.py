@@ -19,27 +19,53 @@ def timer():
 
     print("loading...")
 
+    def scramble_line(moves):
+        x, y = 250, 10
+        moves = moves.split('  ')
+        if len(moves) > 10:
+            c = 0
+            for i in range(len(moves)):
+                i += 1
+                s = ""
+                if not i % 14:
+                    y += 25
+                    c += 1
+                    s = ""
+                    for j in moves[i-14:i]:
+                        s += j + "  "
+                    draw_text(screen, s, 23, x, y, BLACK)
+                elif len(moves)//14 == c and i == len(moves):
+                    s = ""
+                    for j in moves[14*c:i]:
+                        s += j + "  "
+                    draw_text(screen, s, 23, x, y+25, BLACK)
+        pygame.display.flip()
+
+
     def scramble(size):
         result = ""
         if size == 3:
-            scramble_list = [[" R ", " R2 ", " R' "], [" L ", " L2 ", " L' "], [" B ", " B2 ", " B' "], [" D ", " D2 ", " D' "], [" F ", " F2 ", " F' "], [" U ", " U2 ", " U' "]]
-            scramble_list = random.sample(scramble_list, len(scramble_list))
-            sub = ''
-            for _ in range(3):
-                scramble_list = random.sample(scramble_list, len(scramble_list))
-                for i in range(len(scramble_list)):
-                    j = scramble_list[i]
-                    sub = random.sample(j, len(j))[random.randint(0,2)]
-                    result += sub
-                scramble_list.remove(j)
-            return result[:-1]
+            scramble_move = [" R"," L"," U"," D"," F"," B"]
+            scramble_sign = [" ", "' ", "2 "]
+            index = [[0,1],[2,3],[4,5]]
+            last_ind = None
+            for i in range(7):
+                shuffled_ind = random.sample([0,1,2], 3)
+                while last_ind == shuffled_ind[0]:
+                    shuffled_ind = random.sample([0,1,2], 3)
+                for j in shuffled_ind:
+                    ran_sign = scramble_sign[random.randint(0,2)]
+                    move = scramble_move[index[j][random.randint(0,1)]] + ran_sign
+                    result += move
+                last_ind = shuffled_ind[2]
+            scramble_line(result)
+
 
         elif size == 2:
             scramble_list = [[" R ", " R2 ", " R' "], [" L ", " L2 ", " L' "], [" B ", " B2 ", " B' "], [" F ", " F2 ", " F' "],[" D ", " D2 ", " D' "], [" U ", " U2 ", " U' "]]
             indexs = [[0,1],[2,3],[4,5]]
             result = ""
             j = []
-
             num = random.randint(0,2)
             if num == 0:
                 j = [0,1,2]*3
@@ -47,12 +73,11 @@ def timer():
                 j = [1,2,0]*3
             else:
                 j = [2,0,1]*3
-
             for i in range(9):
                 index = indexs[j[i]][random.randint(0,1)]
                 result += scramble_list[index][random.randint(0,2)]
                 
-            return result
+            draw_text(screen,result, 23, 250, 45, BLACK)
                 
 
     font_name = pygame.font.match_font("roman")
@@ -233,10 +258,9 @@ def timer():
     x = 535
     print("pygame opened!")
     screen.fill(WHITE)
-    draw_text(screen, 'Press space to start timing', 25, 250, 100, RED)
+    draw_text(screen, 'Press space to start timing', 25, 250, 150, RED)
     scramble_info = scramble(cube_size)
-    draw_text(screen, f"Scrable({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
-    draw_text(screen, scramble_info, 23, 255, 45, BLACK)
+    draw_text(screen, f"Scramble({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
     pygame.draw.rect(screen, BLACK, pygame.Rect(x-25,y,55,30), 2)
     pygame.draw.rect(screen, BLACK, pygame.Rect(x+30,y,125,30), 2)
     font = pygame.font.SysFont("roman", 25)
@@ -405,10 +429,9 @@ def timer():
                         times.append([int(hours),int(minutes),float(seconds_to_2)])
                         info[solves] = [draw_time(float(seconds_to_2), int(minutes), int(hours)), 1, 1]
                         draw_solves(solves, info, mover+15)
-                        draw_text(screen, 'Press space again to start', 25, 250, 100, RED)
+                        draw_text(screen, 'Press space again to start', 25, 250, 150, RED)
                         scramble_info = scramble(cube_size)
-                        draw_text(screen, f"Scrable({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
-                        draw_text(screen, scramble_info, 23, 255, 45, BLACK)
+                        draw_text(screen, f"Scramble({cube_size}x{cube_size}): ", 23, 250, 10, BLACK)
                         draw_text(screen, draw_time(seconds_to_2, minutes, hours), 50, 250, 200, GREEN, True)
                         draw_info(times)
                         draw_text(screen, f"solve #{solves}", 25, 250, 570, BLACK)
